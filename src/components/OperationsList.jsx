@@ -1,82 +1,44 @@
-import React, { useState } from "react";
-import Modal from "./Modal";
-import OperationEditForm from "./FormEdit";
-import OperationDeleteConfirm from "./DeleteConfirm"; 
-
-function OperationsList({ operations, setOperations }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedOperation, setSelectedOperation] = useState(null);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // Nuevo estado para la modal de eliminación
-
-  const handleUpdateOperation = (updatedOperation) => {
-    setOperations(operations.map(op => {
-      if (op.id === updatedOperation.id) { // Assuming each operation has a unique 'id'
-        return updatedOperation; // Return the updated operation
-      }
-      return op; // Return the original operation
-    }));
-  };
-  
-  const handleEditClick = (operation) => {
-    setSelectedOperation(operation);
-    setIsModalOpen(true);
-  };
-
-  const handleDeleteClick = (operation) => {
-    setSelectedOperation(operation);
-    setIsDeleteModalOpen(true); // Abrir la modal de confirmación de eliminación
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setIsDeleteModalOpen(false); // Cerrar la modal de eliminación también
-    setSelectedOperation(null);
-  };
-
-  const handleConfirmDelete = () => {
-    setOperations(operations.filter((op) => op !== selectedOperation)); // Eliminar la operación seleccionada
-    handleCloseModal();
-  };
-
+function OperationsList({ operations }) {
   return (
     <div>
-      {Array.isArray() && operations.length > 0 ? (
+      {Array.isArray(operations) && operations.length > 0 ? (
         operations.map((operation, index) => (
           <div
             key={index}
-            style={{
-              display: "flex",
-              marginBottom: "10px",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-            }}
+            className={`operation-card mb-3 ${
+              operation.type === "Compra" ? "shop" : "sell"
+            }`}
           >
-            <div>Tipo: {operation.type}</div>
-            <div>Moneda de entrada: {operation.inputCurrency}</div>
-            <div>Moneda de salida: {operation.outputCurrency}</div>
-            <div>Fecha: {operation.date}</div>
-            <button onClick={() => handleEditClick(operation)}>Editar</button>
-            <button onClick={() => handleDeleteClick(operation)}>
-              Eliminar
-            </button>
+            <h4
+              className={` mb-1 ${
+                operation.type === "Compra" ? "text-success" : "text-danger"
+              }`}
+            >
+              {operation.type}
+            </h4>
+
+            <div className="operation-list">
+              <div className="f-30">
+                <h5 className="">
+                  Entrada (<span>{operation.moneyEntryType}</span>){" "}
+                </h5>
+                {operation.inputCurrency}
+              </div>
+              <div className="f-30">
+                <h5 className="">
+                  Salida (<span>{operation.moneyExitType}</span>){" "}
+                </h5>
+                {operation.outputCurrency}
+              </div>
+              <div className="f-20">
+                <h5 className="">Fecha</h5> {operation.date}
+              </div>
+            </div>
           </div>
         ))
       ) : (
         <div>No hay operaciones para mostrar.</div>
       )}
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <OperationEditForm
-          initialData={selectedOperation}
-          onUpdate={handleUpdateOperation}
-        />
-      </Modal>
-      <Modal isOpen={isDeleteModalOpen} onClose={handleCloseModal}>
-        <OperationDeleteConfirm
-          onConfirm={handleConfirmDelete}
-          onCancel={handleCloseModal}
-        />
-      </Modal>
     </div>
   );
 }
