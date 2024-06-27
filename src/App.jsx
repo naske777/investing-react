@@ -1,74 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Money from "./components/Money";
 import OperationsList from "./components/OperationsList";
 import Modal from "./components/Modal";
 import OperationForm from "./components/FormCreate";
-
-const initialOperations = [
-  {
-    id: 1,
-    type: "Compra",
-    inputCurrency: "150",
-    outputCurrency: "200",
-    moneyEntryType: "USD",
-    moneyExitType: "MLC",
-    date: "2023-04-01",
-  },
-  {
-    id: 2,
-    type: "Venta",
-    inputCurrency: "250",
-    outputCurrency: "100",
-    moneyEntryType: "CUP",
-    moneyExitType: "MLC",
-    date: "2023-04-02",
-  },
-];
+import { fetchData } from "./utilities/api";
 
 function App() {
-  const [operations, setOperations] = useState(initialOperations);
+  const [operations, setOperations] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  // Define selectedOperation state here
   const [selectedOperation, setSelectedOperation] = useState(null);
+  const [currencies, setCurrencies] = useState({ mlc: 0, usd: 0, cup: 0 });
+
+  useEffect(() => {
+    const getOperations = async () => {
+      try {
+        console.log("running getOperations");
+        const data = await fetchData('transactions/');
+        setOperations(data);
+      } catch (error) {
+        console.error("Error fetching operations:", error);
+      }
+    };
+  
+    getOperations();
+  }, []);
+
 
   const handleEditClick = () => {
-    const operation = operations[0]; // Assumes you want to edit the first operation
+    const operation = operations[0];
     setSelectedOperation(operation);
     setIsModalOpen(true);
   };
+
   const handleDeleteClick = () => {
-    setOperations(operations.slice(1)); // Elimina el primer elemento del array
-    setIsDeleteModalOpen(false); // Cierra la modal después de eliminar
+    setOperations(operations.slice(1));
+    setIsDeleteModalOpen(false);
   };
 
-  const handleCreateOperation = (operationData) => {
-    setOperations([operationData, ...operations]); // Añade la nueva operación al inicio del array
-    setIsModalOpen(false); // Cierra la modal después de crear la operación
+  const handleCreateOperation = (data) => {
+    console.log(data);
+    const { response, formValues } = data;
+    setOperations([formValues, ...operations]);
+    console.log(fromValues);
+    console.log(operations);
+    setIsModalOpen(false);
+    // Actualizar el estado de currencies con el response
+    setCurrencies(response);
   };
 
   return (
     <>
-      <Money mlc={10} cup={100} usd={200} />
+      {/* Pasar currencies como prop a Money */}
+      <Money conCurrencies={currencies} />
       <div className="mb-4">
-        <button
-          className="mb-2 button-create"
-          onClick={() => setIsModalOpen(true)}
-        >
+        <button className="mb-2 button-create" onClick={() => setIsModalOpen(true)}>
           Crear Operación
         </button>
-
-        <button
-          className="button-edit mb-2"
-          onClick={handleEditClick}
-        >
+        <button className="button-edit mb-2" onClick={handleEditClick}>
           Editar última operación
         </button>
-        <button
-          className="button-delete"
-          onClick={handleDeleteClick}
-        >
+        <button className="button-delete" onClick={handleDeleteClick}>
           Eliminar última operación
         </button>
       </div>
