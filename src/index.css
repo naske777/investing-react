@@ -16,6 +16,12 @@
   justify-content: space-evenly;
 }
 
+.d-flex-between{
+  display: flex;
+  justify-content: space-between;
+
+}
+
 .money-content {
   background-color: var(--blue-color);
   color: white;

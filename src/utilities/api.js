@@ -16,7 +16,7 @@ const fetchData = async (endpoint, data = {}, method = 'GET') => {
 
   try {
     const response = await fetch(url, options);
-    const data = await response.json();
+    const data = method !== "DELETE" ? await response.json() : response;
     if (!response.ok) {
       throw new Error(`Error: ${data}`);
     }
