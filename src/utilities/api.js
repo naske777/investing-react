@@ -18,7 +18,6 @@ const fetchData = async (endpoint, data = {}, method = 'GET') => {
     const response = await fetch(url, options);
     const data = method !== "DELETE" ? await response.json() : response;
     if (!response.ok) {
-      alert("Su ip no esta permitida")
       throw new Error(`Error: ${data}`);
     }
     console.log(data);
