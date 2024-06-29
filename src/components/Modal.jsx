@@ -23,9 +23,11 @@ const Modal = ({ isOpen, onClose, children }) => {
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
+        margin: '0 10px',
+
       }}>
         {children}
-        <button onClick={onClose}>Close</button>
+        <button className='button-secondary' onClick={onClose}>Cerrar</button>
       </div>
     </div>,
     document.body

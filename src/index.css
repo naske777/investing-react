@@ -1,34 +1,49 @@
-/* Crea variables  */
+/* Variables de colores */
 :root {
   --blue-light-color: #006fe6;
   --blue-color: #2966a6;
   --blue-dark-color: #334c66;
-  
   --yellow-light-color: #e69100;
   --yellow-color: #916d30;
   --yellow-dark-color: #3c3428;
-  
-  --red-color:#E61100;
+  --red-color: #E61100;
 }
 
+/* Configuraciones globales */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: rgb(254, 250, 239);
+}
+
+/* formulario */
+
+input,select{
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Flexbox */
 .d-flex-evenly {
   display: flex;
   justify-content: space-evenly;
 }
 
-.d-flex-between{
+.d-flex-between {
   display: flex;
   justify-content: space-between;
-
 }
 
-.money-content {
-  background-color: var(--blue-color);
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid var(--blue-dark-color);
+.operation-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+/* Espaciado */
 
 .mb-4 {
   margin-bottom: 1rem;
@@ -42,38 +57,33 @@
   margin-bottom: 0.5rem;
 }
 
-.mb-1{
+.mb-1 {
   margin-bottom: 0.25rem;
-
 }
 
+.ms-2{
+  margin-left: 0.5rem;
+}
+
+/* Flex items */
 .f-20 {
   flex: 20 0 0;
 }
+
 .f-30 {
   flex: 30 0 0;
 }
+
 .f-10 {
   flex: 10 1 0;
 }
 
+/* Alineación de texto */
 .text-end {
   text-align: end;
 }
 
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-
-    background-color: rgb(254, 250, 239);
-}
-
-.money {
-  border: 2px solid whitesmoke;
-  padding: 10px;
-  border-radius: 5px;
-}
-
+/* Estilos de botones */
 button {
   font-weight: bold;
   padding: 10px 15px;
@@ -82,56 +92,71 @@ button {
   color: rgb(234, 234, 234);
   width: 100%;
 }
+
+
+
 .button-create {
   background-color: var(--blue-color);
-
 }
 
 .button-delete {
   background-color: var(--red-color);
 }
+
 .button-edit {
   background-color: var(--yellow-light-color);
 }
+.button-secondary{
+  background-color: #ccc;
+  color: #000000;
+}
 
-.text-muted{
+/* Estilos de texto */
+.text-muted {
   opacity: 0.5;
   font-size: 12px;
 }
 
-.text-success{
+.text-success {
   color: rgb(103, 150, 33);
 }
 
-.text-danger{
+.text-danger {
   color: var(--red-color);
 }
 
-.operation-card {
-  border: 1px solid whitesmoke;
+/* Estilos de tarjetas y contenido */
+.money-content, .money, .operation-card {
   padding: 10px;
   border-radius: 5px;
-  background-color: white;
-  border: #cecece 1px solid;
-  }
-
-.operation-list{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-.shop{
+.money-content {
+  background-color: var(--blue-color);
+  color: white;
+  border: 1px solid var(--blue-dark-color);
+}
+
+.money {
+  border: 2px solid whitesmoke;
+}
+
+.operation-card {
+  background-color: white;
+  border: #cecece 1px solid;
+}
+
+/* Estilos específicos de operaciones */
+.shop {
   border-left: rgb(103, 150, 33) 5px solid;
 }
 
-.sell{
+.sell {
   border-left: var(--red-color) 5px solid;
 }
 
-
-h4 , h5{
-  margin-top: 0px ;
+/* Estilos de encabezados */
+h4, h5 {
+  margin-top: 0px;
   margin-bottom: 0px;
 }
-
